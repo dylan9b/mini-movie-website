@@ -1,4 +1,4 @@
-<h1 class="m-0 fs-3">Home</h1>
+<h4 class="fs-6">Top Movies</h4>
 
 <div class="row">
   <div class="col-12">
@@ -6,12 +6,11 @@
   </div>
 </div>
 
-<h4 class="fs-6">Trending Movies</h4>
-
 <div class="home-container d-grid gap-3">
-  <!-- @for (movie of movies; track movie.id) {
-    <app-game [movie]="movie"></app-game>
+  @for (movie of topMoviesSignal(); track movie.id) {
+    <p>{{ movie.title }} - {{ movie.popularity }}</p>
+    <!-- <app-movie [movie]="movie"></app-movie> -->
   } @empty {
     <h1 class="text-black">No movies available.</h1>
-  } -->
+  }
 </div>

@@ -7,6 +7,11 @@ export interface MovieState {
   isLoading: boolean;
   filter: MovieStateFilter;
   movies: MovieResponse[];
+
+  config: {
+    loadDelay: number;
+    loadOffset: number;
+  };
 }
 
 export interface Item {
@@ -18,6 +23,7 @@ export interface MovieStateFilter {
   searchTerm: string | null;
   order: 'ASC' | 'DESC';
   sortBy: string | null;
-  limit: number;
+  first: number;
   offset: number;
+  genre: string[] | null;
 }

@@ -13,13 +13,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/home/home.component').then((c) => c.HomeComponent),
       },
-      // {
-      //   path: 'movies',
-      //   loadComponent: () =>
-      //     import('./pages/favourites/favourites.component').then(
-      //       (c) => c.FavouritesComponent,
-      //     ),
-      // },
+      {
+        path: 'movies',
+        loadComponent: () =>
+          import('./pages/movies/movies.component').then(
+            (c) => c.MoviesComponent,
+          ),
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' },
     ],

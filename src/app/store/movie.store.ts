@@ -20,10 +20,15 @@ const initialState: MovieState = {
   favourites: {},
   filter: {
     order: 'ASC',
-    searchTerm: '',
-    limit: 5,
+    searchTerm: null,
+    first: 5,
     offset: 5,
     sortBy: null,
+    genre: null,
+  },
+  config: {
+    loadDelay: 500,
+    loadOffset: 10,
   },
   isLoading: false,
   movies: [],
@@ -35,10 +40,36 @@ export const MovieStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withDevtools('movie'),
-  withComputed((state) => ({
-    favouritesSignal: computed(() => state.favourites()),
-    searchTermSignal: computed(() => state.filter.searchTerm()),
-  })),
+  withComputed((state) => {
+    const moviesSignal = computed(() =>
+      state
+        .movies()
+        .filter((movie) =>
+          movie.title
+            .toLocaleLowerCase()
+            .includes(state.filter().searchTerm ?? ''),
+        )
+        .slice(0, state.filter().first + state.filter().offset),
+    );
+
+    return {
+      favouritesSignal: computed(() => state.favourites()),
+      searchTermSignal: computed(() => state.filter.searchTerm()),
+      filterSignal: computed(() => state.filter()),
+      genreSignal: computed(() =>
+        [...new Set(moviesSignal().flatMap((movie) => movie.genres))].sort(
+          (a, b) => (a > b ? 1 : -1),
+        ),
+      ),
+      moviesSignal,
+      topMoviesSignal: computed(() =>
+        state
+          .movies()
+          .sort((a, b) => b.popularity - a.popularity)
+          .slice(0, 10),
+      ),
+    };
+  }),
   withMethods(
     (
       store,
@@ -89,6 +120,13 @@ export const MovieStore = signalStore(
         }));
       },
 
+      updateIsLoading(isLoading: boolean): void {
+        patchState(store, (state) => ({
+          ...state,
+          isLoading,
+        }));
+      },
+
       loadMovies: rxMethod<void>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
@@ -121,6 +159,8 @@ export const MovieStore = signalStore(
 
         const searchTermFromParams =
           route.snapshot.queryParamMap.get('searchTerm') ?? null;
+        const genresFromParams =
+          route.snapshot.queryParamMap.getAll('genre') ?? null;
 
         patchState(store, (state) => ({
           favourites: {
@@ -130,15 +170,17 @@ export const MovieStore = signalStore(
           filter: {
             ...state.filter,
             searchTerm: searchTermFromParams,
+            genre: genresFromParams,
           },
         }));
 
         effect(() => {
-          const searchTerm = store.filter.searchTerm();
+          const { searchTerm, genre } = store.filter();
 
           router.navigate([], {
             queryParams: {
               searchTerm: searchTerm?.length ? searchTerm : null,
+              genre: genre?.length ? genre : null,
             },
           });
         });

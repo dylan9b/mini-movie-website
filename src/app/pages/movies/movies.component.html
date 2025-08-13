@@ -1,1 +1,64 @@
-<p>movies works!</p>
+<h4>All Movies {{ moviesSignal().length }}</h4>
+
+<app-search> </app-search>
+
+<mat-form-field>
+  <mat-label>Genre</mat-label>
+  <mat-select
+    [value]="selectedGenresSignal()"
+    multiple
+    (selectionChange)="onGenreChange($event)"
+  >
+    <button
+      type="button"
+      mat-button
+      matButton="filled"
+      class="w-full"
+      (click)="onClearGenres()"
+    >
+      Clear All
+    </button>
+
+    <mat-select-trigger>
+      {{ selectedGenresSignal()?.[0] ?? "" }}
+      @if ((selectedGenresSignal()?.length || 0) > 1) {
+        <span class="example-additional-selection">
+          (+{{ (selectedGenresSignal()?.length || 0) - 1 }}
+          {{ selectedGenresSignal()?.length === 2 ? "other" : "others" }})
+        </span>
+      }
+    </mat-select-trigger>
+
+    @for (genre of genreSignal(); track genre) {
+      <mat-option [value]="genre">{{ genre }}</mat-option>
+    }
+  </mat-select>
+
+  <!-- <mat-select [multiple]="true">
+    @for (genre of genreSignal(); track genre) {
+      <mat-option [value]="genre">{{ genre }}</mat-option>
+    }
+  </mat-select>-->
+</mat-form-field>
+
+<div>
+  @if (!isLoadingSignal()) {
+    @for (movie of moviesSignal(); track movie.id) {
+      <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p>
+      <!-- <app-movie [movie]="movie"></app-movie> -->
+    } @empty {
+      <h1 class="text-black">No movies available.</h1>
+    }
+  } @else {
+    <p>... LOADING</p>
+  }
+
+  <button
+    [disabled]="isLoadMoreDisabled()"
+    (click)="onLoadMoreClick()"
+    type="button"
+    matButton="filled"
+  >
+    Load More
+  </button>
+</div>

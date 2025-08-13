@@ -1,6 +1,6 @@
 export interface MovieRequest {
   searchTerm: string;
   sortBy: string;
-  limit: string;
+  first: string;
   offset: string;
 }

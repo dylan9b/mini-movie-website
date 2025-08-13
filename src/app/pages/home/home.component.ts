@@ -10,4 +10,6 @@ import { MovieStore } from '@store/movie.store';
 })
 export class HomeComponent {
   private readonly _store = inject(MovieStore);
+
+  protected readonly topMoviesSignal = this._store.topMoviesSignal;
 }
