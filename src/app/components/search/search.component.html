@@ -1,0 +1,20 @@
+<mat-form-field class="w-full">
+  <mat-label>Search for Asset and press Enter</mat-label>
+  <input
+    matInput
+    type="text"
+    [value]="searchTermSignal()"
+    (keyup.enter)="onSubmitSearchTerm($event)"
+  />
+  @if (searchTermSignal()) {
+  <button
+    matSuffix
+    matIconButton
+    aria-label="Clear"
+    class="cursor-pointer"
+    (click)="onClearFilter()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  }
+</mat-form-field>
