@@ -1,45 +1,7 @@
 <h4>All Movies {{ moviesSignal().length }}</h4>
 
 <app-search> </app-search>
-
-<mat-form-field>
-  <mat-label>Genre</mat-label>
-  <mat-select
-    [value]="selectedGenresSignal()"
-    multiple
-    (selectionChange)="onGenreChange($event)"
-  >
-    <button
-      type="button"
-      mat-button
-      matButton="filled"
-      class="w-full"
-      (click)="onClearGenres()"
-    >
-      Clear All
-    </button>
-
-    <mat-select-trigger>
-      {{ selectedGenresSignal()?.[0] ?? "" }}
-      @if ((selectedGenresSignal()?.length || 0) > 1) {
-        <span class="example-additional-selection">
-          (+{{ (selectedGenresSignal()?.length || 0) - 1 }}
-          {{ selectedGenresSignal()?.length === 2 ? "other" : "others" }})
-        </span>
-      }
-    </mat-select-trigger>
-
-    @for (genre of genreSignal(); track genre) {
-      <mat-option [value]="genre">{{ genre }}</mat-option>
-    }
-  </mat-select>
-
-  <!-- <mat-select [multiple]="true">
-    @for (genre of genreSignal(); track genre) {
-      <mat-option [value]="genre">{{ genre }}</mat-option>
-    }
-  </mat-select>-->
-</mat-form-field>
+<app-dropdown></app-dropdown>
 
 <div>
   @if (!isLoadingSignal()) {

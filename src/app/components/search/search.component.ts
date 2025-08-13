@@ -45,8 +45,8 @@ export class SearchComponent implements AfterViewInit {
         takeUntilDestroyed(this._destroyRef),
       )
       .subscribe((searchTerm) => {
-        this._store.updateFilter({ searchTerm });
         this._store.updateIsLoading(false);
+        this._store.updateFilter({ searchTerm });
       });
   }
 }

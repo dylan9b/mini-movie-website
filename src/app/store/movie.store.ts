@@ -56,12 +56,12 @@ export const MovieStore = signalStore(
       favouritesSignal: computed(() => state.favourites()),
       searchTermSignal: computed(() => state.filter.searchTerm()),
       filterSignal: computed(() => state.filter()),
+      moviesSignal,
       genreSignal: computed(() =>
         [...new Set(moviesSignal().flatMap((movie) => movie.genres))].sort(
           (a, b) => (a > b ? 1 : -1),
         ),
       ),
-      moviesSignal,
       topMoviesSignal: computed(() =>
         state
           .movies()
@@ -152,6 +152,7 @@ export const MovieStore = signalStore(
     ) => ({
       onInit(): void {
         store.loadMovies();
+
         const favsInLocalStorage = JSON.parse(
           platformService.localStorage?.getItem(FAV_ITEMS_LOCAL_STORAGE) ??
             '{}',

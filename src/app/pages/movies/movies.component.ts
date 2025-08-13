@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { SearchComponent } from '@components/search/search.component';
 import { MovieStore } from '@store/movie.store';
 @Component({
@@ -15,7 +15,7 @@ import { MovieStore } from '@store/movie.store';
     MatButtonModule,
     SearchComponent,
     MatFormFieldModule,
-    MatSelectModule,
+    DropdownComponent,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
@@ -27,8 +27,6 @@ export class MoviesComponent {
   protected readonly isLoadingSignal = this._store.isLoading;
   protected readonly loadOffsetSignal = this._store.config.loadOffset;
   protected readonly moviesSignal = this._store.moviesSignal;
-  protected readonly genreSignal = this._store.genreSignal;
-  protected readonly selectedGenresSignal = this._store.filter.genre;
 
   protected readonly isLoadMoreDisabled = computed(
     () =>
@@ -39,18 +37,6 @@ export class MoviesComponent {
   onLoadMoreClick(): void {
     this._store.updateFilter({
       offset: this._store.filterSignal().offset + this.loadOffsetSignal(),
-    });
-  }
-
-  onGenreChange(event: MatSelectChange<string>): void {
-    this._store.updateFilter({
-      genre: [...event.value],
-    });
-  }
-
-  onClearGenres(): void {
-    this._store.updateFilter({
-      genre: null,
     });
   }
 }
