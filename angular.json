@@ -27,9 +27,13 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/app/styles"]
+              "includePaths": [
+                "src/app/styles"
+              ]
             },
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
@@ -87,15 +91,31 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/app/styles"]
+              "includePaths": [
+                "src/app/styles"
+              ]
             },
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }
