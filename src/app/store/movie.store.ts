@@ -21,8 +21,8 @@ const initialState: MovieState = {
   filter: {
     order: 'ASC',
     searchTerm: null,
-    first: 5,
-    offset: 5,
+    first: 10,
+    offset: 0,
     sortBy: null,
     genre: null,
   },

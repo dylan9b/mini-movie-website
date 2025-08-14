@@ -25,7 +25,7 @@ export class DropdownComponent {
   onClearGenres(): void {
     this._store.updateFilter({
       genre: null,
-      offset: 5,
+      offset: 0,
     });
   }
 }

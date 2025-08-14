@@ -1,0 +1,6 @@
+@use "colors" as *;
+
+:host {
+  --mat-button-filled-label-text-color: #{$neon-green};
+  --mat-button-filled-container-color: #{$black};
+}

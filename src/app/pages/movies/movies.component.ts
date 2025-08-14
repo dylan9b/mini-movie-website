@@ -46,8 +46,10 @@ export class MoviesComponent {
   );
 
   onLoadMoreClick(): void {
-    this._store.updateFilter({
-      offset: this._store.filterSignal().offset + this.loadOffsetSignal(),
-    });
+    if (!this.isLoadMoreDisabled()) {
+      this._store.updateFilter({
+        offset: this._store.filterSignal().offset + this.loadOffsetSignal(),
+      });
+    }
   }
 }
