@@ -13,7 +13,7 @@ import {
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { MovieService } from '@services/movie.service';
 import { PlatformService } from '@services/platform.service';
-import { pipe, switchMap, tap } from 'rxjs';
+import { exhaustMap, pipe, tap } from 'rxjs';
 import { Item, MovieState, MovieStateFilter } from './movie.state';
 
 const initialState: MovieState = {
@@ -149,7 +149,7 @@ export const MovieStore = signalStore(
       loadMovies: rxMethod<void>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
-          switchMap(() => {
+          exhaustMap(() => {
             return movieService.getAll$().pipe(
               tapResponse({
                 next: (movies) => patchState(store, { movies }),

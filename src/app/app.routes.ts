@@ -20,6 +20,13 @@ export const routes: Routes = [
             (c) => c.MoviesComponent,
           ),
       },
+      {
+        path: 'movies/:slug',
+        loadComponent: () =>
+          import('./pages/movies/movie-detail/movie-detail.component').then(
+            (c) => c.MovieDetailComponent,
+          ),
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' },
     ],
