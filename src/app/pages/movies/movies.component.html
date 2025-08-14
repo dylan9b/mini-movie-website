@@ -1,44 +1,46 @@
-<h4>All Movies {{ moviesSignal().length }}</h4>
+<section class="flex flex-col gap-6">
+  <app-title value="All Movies"></app-title>
 
-<section class="flex gap-4 flex-col">
-  <div class="flex flex-col md:flex-row gap-4 w-full">
-    <app-search class="md:flex-[0.8]"> </app-search>
-    <app-dropdown class="md:flex-[0.2]"></app-dropdown>
-  </div>
+  <section class="flex gap-4 flex-col">
+    <div class="flex flex-col md:flex-row gap-4 w-full">
+      <app-search class="md:flex-[0.8]"> </app-search>
+      <app-dropdown class="md:flex-[0.2]"></app-dropdown>
+    </div>
 
-  <div>
-    @if (!isLoadingSignal()) {
-      <div
-        class="grid gap-3"
-        [class.grid-cols-1]="!moviesSignal().length"
-        [class.grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))]]="
-          moviesSignal().length
-        "
-        [class.md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]]="
-          moviesSignal().length
-        "
+    <div>
+      @if (!isLoadingSignal()) {
+        <div
+          class="grid gap-3"
+          [class.grid-cols-1]="!moviesSignal().length"
+          [class.grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))]]="
+            moviesSignal().length
+          "
+          [class.md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]]="
+            moviesSignal().length
+          "
+        >
+          @for (movie of moviesSignal(); track movie.id) {
+            <!-- <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p> -->
+            <app-movie [movie]="movie"></app-movie>
+          } @empty {
+            <app-alert></app-alert>
+          }
+        </div>
+      } @else {
+        <app-loading
+          class="opacity-100 transition-opacity duration-500"
+          [class.opacity-0]="moviesSignal().length"
+        ></app-loading>
+      }
+
+      <button
+        type="button"
+        matButton="filled"
+        [disabled]="isLoadMoreDisabled()"
+        (click)="onLoadMoreClick()"
       >
-        @for (movie of moviesSignal(); track movie.id) {
-          <!-- <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p> -->
-          <app-movie [movie]="movie"></app-movie>
-        } @empty {
-          <app-alert></app-alert>
-        }
-      </div>
-    } @else {
-      <app-loading
-        class="opacity-100 transition-opacity duration-500"
-        [class.opacity-0]="moviesSignal().length"
-      ></app-loading>
-    }
-
-    <button
-      type="button"
-      matButton="filled"
-      [disabled]="isLoadMoreDisabled()"
-      (click)="onLoadMoreClick()"
-    >
-      Load More
-    </button>
-  </div>
+        Load More
+      </button>
+    </div>
+  </section>
 </section>

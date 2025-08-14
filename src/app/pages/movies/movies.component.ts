@@ -12,6 +12,7 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { LoadingComponent } from '@components/loading/loading.component';
 import { MovieComponent } from '@components/movie/movie.component';
 import { SearchComponent } from '@components/search/search.component';
+import { TitleComponent } from '@components/title/title.component';
 import { MovieStore } from '@store/movie.store';
 @Component({
   selector: 'app-movies',
@@ -23,6 +24,7 @@ import { MovieStore } from '@store/movie.store';
     MovieComponent,
     AlertComponent,
     LoadingComponent,
+    TitleComponent,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',

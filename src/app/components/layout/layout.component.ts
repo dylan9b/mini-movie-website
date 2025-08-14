@@ -14,6 +14,7 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { SidenavComponent } from '@components/sidenav/sidenav.component';
+import { MovieStore } from '@store/movie.store';
 
 @Component({
   selector: 'app-layout',
@@ -33,16 +34,17 @@ import { SidenavComponent } from '@components/sidenav/sidenav.component';
 export class LayoutComponent implements AfterViewInit {
   private readonly _breakpointObserver = inject(BreakpointObserver);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _store = inject(MovieStore);
+  protected readonly isMenuCollapsedSignal = this._store.config.isMenuCollapsed;
 
   @ViewChild('drawer') drawer!: MatSidenav;
-  protected isCollapsed = false;
 
   toggleSidenav(): void {
-    this.isCollapsed = !this.isCollapsed;
+    this._store.updateIsMenuCollapsed(!this.isMenuCollapsedSignal());
   }
 
   onBackDropClick(): void {
-    this.isCollapsed = true;
+    this._store.updateIsMenuCollapsed(true);
   }
 
   // Automatically collapse on mobile
@@ -53,7 +55,7 @@ export class LayoutComponent implements AfterViewInit {
       .subscribe((result) => {
         if (result.matches) {
           this.drawer.mode = 'over';
-          this.isCollapsed = true;
+          this._store.updateIsMenuCollapsed(true);
         } else {
           this.drawer.mode = 'side';
         }

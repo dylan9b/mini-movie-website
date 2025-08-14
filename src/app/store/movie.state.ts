@@ -11,6 +11,7 @@ export interface MovieState {
   config: {
     loadDelay: number;
     loadOffset: number;
+    isMenuCollapsed: boolean;
   };
 }
 

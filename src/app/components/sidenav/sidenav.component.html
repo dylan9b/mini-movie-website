@@ -1,4 +1,32 @@
-<mat-nav-list>
-  <a mat-list-item routerLink="/home" routerLinkActive="active">Home</a>
-  <a mat-list-item routerLink="/movies" routerLinkActive="active">Movies</a>
-</mat-nav-list>
+<section class="!overflow-hidden">
+  <div class="flex items-center justify-between w-full">
+    <img
+      src="assets/images/logo-icon.svg"
+      alt="Logo icon"
+      width="40"
+      height="40"
+      decoding="async"
+    />
+
+    <button
+      type="button"
+      mat-icon-button
+      class="md:!hidden"
+      (click)="onCloseClick()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-nav-list class="!flex flex-col gap-3">
+    @for (item of sideNavItems; track item.label) {
+      <a
+        mat-list-item
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        class="text-center"
+        >{{ item.label }}</a
+      >
+    }
+  </mat-nav-list>
+</section>

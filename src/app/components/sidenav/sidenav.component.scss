@@ -1,6 +1,10 @@
 @use "colors" as *;
 
+:host {
+  --mat-sys-on-surface: #{$white};
+  --mat-icon-color: #{$white};
+}
+
 .active {
-  background-color: $neon-green;
-  color: white;
+  --mat-sys-on-surface: #{$neon-green};
 }

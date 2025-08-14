@@ -29,6 +29,7 @@ const initialState: MovieState = {
   config: {
     loadDelay: 500,
     loadOffset: 10,
+    isMenuCollapsed: false,
   },
   isLoading: false,
   movies: [],
@@ -125,6 +126,16 @@ export const MovieStore = signalStore(
         patchState(store, (state) => ({
           ...state,
           filter: { ...state.filter, ...filter },
+        }));
+      },
+
+      updateIsMenuCollapsed(isMenuCollapsed: boolean): void {
+        patchState(store, (state) => ({
+          ...state,
+          config: {
+            ...state.config,
+            isMenuCollapsed,
+          },
         }));
       },
 

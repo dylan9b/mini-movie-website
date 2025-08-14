@@ -1,20 +1,32 @@
 <mat-sidenav-container
-  class="app-container"
+  class="app-container h-full"
   (backdropClick)="onBackDropClick()"
+  autosize
 >
   <!-- Sidenav -->
-  <mat-sidenav #drawer [mode]="'side'" [opened]="!isCollapsed" class="sidenav">
+  <mat-sidenav
+    #drawer
+    [mode]="'side'"
+    [opened]="!isMenuCollapsedSignal()"
+    class="sidenav"
+    class="p-4 !w-full md:!w-1/4 lg:!w-1/8 !border-r-2 !rounded-none !border-gray-400/30 !bg-black"
+  >
     <app-sidenav></app-sidenav>
   </mat-sidenav>
 
   <!-- Content -->
   <mat-sidenav-content>
     <!-- Small hamburger outside drawer for collapsed state -->
-    <button mat-icon-button (click)="toggleSidenav()">
+    <button
+      type="button"
+      mat-icon-button
+      (click)="toggleSidenav()"
+      class="ml-4"
+    >
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="content">
+    <div class="content overflow-hidden md:overflow-auto">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
