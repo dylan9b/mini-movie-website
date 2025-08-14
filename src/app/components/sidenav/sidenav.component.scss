@@ -1,0 +1,6 @@
+@use "colors" as *;
+
+.active {
+  background-color: $neon-green;
+  color: white;
+}

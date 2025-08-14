@@ -1,0 +1,18 @@
+.app-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 250px;
+  &.mat-drawer-collapsed {
+    width: 50px;
+  }
+}
+
+.toggle-btn {
+  margin: 0.5rem;
+}
+
+.content {
+  padding: 1rem;
+}

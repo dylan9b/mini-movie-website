@@ -1,3 +1,21 @@
-<main class="bg-black/20 h-full p-20">
-  <router-outlet></router-outlet>
-</main>
+<mat-sidenav-container
+  class="app-container"
+  (backdropClick)="onBackDropClick()"
+>
+  <!-- Sidenav -->
+  <mat-sidenav #drawer [mode]="'side'" [opened]="!isCollapsed" class="sidenav">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+
+  <!-- Content -->
+  <mat-sidenav-content>
+    <!-- Small hamburger outside drawer for collapsed state -->
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
