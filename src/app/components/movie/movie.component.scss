@@ -1,0 +1,66 @@
+@use "mixins" as *;
+
+a {
+  .hover-background {
+    opacity: 0;
+    background-color: #ffffffd4;
+    z-index: 1;
+    transition: opacity 0.3s ease-in-out;
+
+    p {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+  }
+
+  .badge {
+    transition: opacity 0.3s ease-in-out;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  button {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover {
+    transition: 0.3s ease-in-out;
+
+    .hover-background,
+    button {
+      z-index: 2;
+      opacity: 1;
+    }
+    .badge {
+      opacity: 0;
+    }
+  }
+
+  img {
+    border-radius: 0.5em;
+
+    @include breakpoint("medium") {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+}
+
+.mobile-cta-container {
+  border-color: lightgray;
+  border-bottom-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

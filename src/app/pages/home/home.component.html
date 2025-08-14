@@ -9,7 +9,7 @@
 <div class="home-container d-grid gap-3">
   @for (movie of topMoviesSignal(); track movie.id) {
     <p>{{ movie.title }} - {{ movie.popularity }}</p>
-    <!-- <app-movie [movie]="movie"></app-movie> -->
+    <app-movie [movie]="movie"></app-movie>
   } @empty {
     <h1 class="text-black">No movies available.</h1>
   }

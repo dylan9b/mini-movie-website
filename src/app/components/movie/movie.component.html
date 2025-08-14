@@ -1,0 +1,55 @@
+<a
+  [routerLink]="['/movies', movie().slug]"
+  routerLinkActive="active text-info"
+  class="position-relative text-decoration-none d-grid"
+>
+  <img
+    [src]="movieImageSignal()"
+    alt="Game Image"
+    class="w-100 h-100"
+    width="100"
+    height="100"
+    decoding="async"
+  />
+
+  <!-- Badge -->
+  <!-- @if (movie().tag) {
+    <span
+      class="badge float-end position-absolute"
+      [ngClass]="movie().tag === 'hot' ? 'text-bg-danger' : 'text-bg-warning'"
+      >{{ movie().tag | uppercase }}</span
+    >
+  } -->
+  @if (movie().id) {
+    <!-- Hover -->
+    <span
+      class="d-none d-md-block hover-background w-100 h-100 position-absolute top-0"
+    >
+      <div class="w-100 h-100 position-absolute">
+        <div
+          class="position-relative h-100 d-flex flex-column justify-content-between align-items-center p-4"
+        >
+          <p class="text-center mb-0 overflow-hidden fs-4">
+            {{ movie().title }}
+          </p>
+          <button
+            (click)="onPlayForFun()"
+            class="btn btn-primary"
+            type="button"
+          >
+            Play for Fun
+          </button>
+        </div>
+      </div>
+    </span>
+  }
+</a>
+
+<div
+  class="bg-white text-black d-flex flex-column align-items-center border border-1 border-top-0 justify-content-start d-md-none w-100 p-3 mobile-cta-container"
+>
+  <p class="mb-0">{{ movie().title }}</p>
+  <button (click)="onPlayForFun()" class="btn btn-primary w-100" type="button">
+    Play for Fun
+  </button>
+</div>
