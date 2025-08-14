@@ -42,7 +42,7 @@ a {
   }
 
   img {
-    border-radius: 0.5em;
+    // border-radius: 0.5em;
 
     @include breakpoint("medium") {
       // border-bottom-right-radius: 0px;

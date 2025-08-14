@@ -1,15 +1,19 @@
 <a
   [routerLink]="['/movies', movie().slug]"
   routerLinkActive="active text-info"
-  class="relative text-decoration-none grid"
+  class="relative text-decoration-none grid h-full rounded"
+  [class.bg-gray-200]="isImageBroken"
 >
   <img
     [src]="movieImageSignal()"
-    alt="Game Image"
-    class="w-full h-auto max-w-[15em] max-h-[15em] md:max-h-[20em]"
+    alt="{{ movie().title + ' Image' }}"
+    class="w-60 h-60 md:h-80 opacity-0 transition-opacity duration-500 rounded"
+    [class.opacity-100]="isImageLoaded || isImageBroken"
     width="300"
     height="445"
     decoding="async"
+    (load)="isImageLoaded = true"
+    (error)="isImageBroken = true"
   />
 
   <!-- Badge -->

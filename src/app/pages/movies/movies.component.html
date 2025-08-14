@@ -23,7 +23,10 @@
       }
     </div>
   } @else {
-    <app-loading></app-loading>
+    <app-loading
+      class="opacity-100 transition-opacity duration-500"
+      [class.opacity-0]="moviesSignal().length"
+    ></app-loading>
   }
 
   <button
