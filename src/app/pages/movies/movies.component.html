@@ -6,17 +6,24 @@
 <div>
   @if (!isLoadingSignal()) {
     <div
-      class="grid gap-3 grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))] md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]"
+      class="grid gap-3"
+      [class.grid-cols-1]="!moviesSignal().length"
+      [class.grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))]]="
+        moviesSignal().length
+      "
+      [class.md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]]="
+        moviesSignal().length
+      "
     >
       @for (movie of moviesSignal(); track movie.id) {
         <!-- <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p> -->
         <app-movie [movie]="movie"></app-movie>
       } @empty {
-        <h1 class="text-black">No movies available.</h1>
+        <app-alert></app-alert>
       }
     </div>
   } @else {
-    <p>... LOADING</p>
+    <app-loading></app-loading>
   }
 
   <button

@@ -7,7 +7,9 @@ import {
 } from '@angular/core';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AlertComponent } from '@components/alert/alert.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
+import { LoadingComponent } from '@components/loading/loading.component';
 import { MovieComponent } from '@components/movie/movie.component';
 import { SearchComponent } from '@components/search/search.component';
 import { MovieStore } from '@store/movie.store';
@@ -19,6 +21,8 @@ import { MovieStore } from '@store/movie.store';
     MatFormFieldModule,
     DropdownComponent,
     MovieComponent,
+    AlertComponent,
+    LoadingComponent,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
