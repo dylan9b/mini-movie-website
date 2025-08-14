@@ -3,10 +3,12 @@ import {
   Component,
   computed,
   inject,
+  ViewChild,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
+import { MovieComponent } from '@components/movie/movie.component';
 import { SearchComponent } from '@components/search/search.component';
 import { MovieStore } from '@store/movie.store';
 @Component({
@@ -16,6 +18,7 @@ import { MovieStore } from '@store/movie.store';
     SearchComponent,
     MatFormFieldModule,
     DropdownComponent,
+    MovieComponent,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
@@ -27,6 +30,8 @@ export class MoviesComponent {
   protected readonly isLoadingSignal = this._store.isLoading;
   protected readonly loadOffsetSignal = this._store.config.loadOffset;
   protected readonly moviesSignal = this._store.moviesSignal;
+
+  @ViewChild('loadMoreBtn') loadMoreBtn!: MatButton;
 
   protected readonly isLoadMoreDisabled = computed(
     () =>

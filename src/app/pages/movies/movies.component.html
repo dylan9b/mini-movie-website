@@ -5,21 +5,25 @@
 
 <div>
   @if (!isLoadingSignal()) {
-    @for (movie of moviesSignal(); track movie.id) {
-      <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p>
-      <!-- <app-movie [movie]="movie"></app-movie> -->
-    } @empty {
-      <h1 class="text-black">No movies available.</h1>
-    }
+    <div
+      class="grid gap-3 grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))] md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]"
+    >
+      @for (movie of moviesSignal(); track movie.id) {
+        <!-- <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p> -->
+        <app-movie [movie]="movie"></app-movie>
+      } @empty {
+        <h1 class="text-black">No movies available.</h1>
+      }
+    </div>
   } @else {
     <p>... LOADING</p>
   }
 
   <button
     [disabled]="isLoadMoreDisabled()"
-    (click)="onLoadMoreClick()"
     type="button"
     matButton="filled"
+    (click)="onLoadMoreClick()"
   >
     Load More
   </button>

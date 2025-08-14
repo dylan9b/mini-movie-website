@@ -41,16 +41,24 @@ export const MovieStore = signalStore(
   withState(initialState),
   withDevtools('movie'),
   withComputed((state) => {
-    const moviesSignal = computed(() =>
-      state
+    const moviesSignal = computed(() => {
+      const searchTerm = (state.filter().searchTerm ?? '').toLowerCase();
+      const selectedGenres = state.filter().genre ?? [];
+
+      return state
         .movies()
-        .filter((movie) =>
-          movie.title
-            .toLocaleLowerCase()
-            .includes(state.filter().searchTerm ?? ''),
-        )
-        .slice(0, state.filter().first + state.filter().offset),
-    );
+        .filter((movie) => {
+          const matchesSearch =
+            !searchTerm || movie.title.toLowerCase().includes(searchTerm);
+
+          const matchesGenres =
+            !selectedGenres.length ||
+            movie.genres.some((genre) => selectedGenres.includes(genre));
+
+          return matchesSearch && matchesGenres;
+        })
+        .slice(0, state.filter().first + state.filter().offset);
+    });
 
     return {
       favouritesSignal: computed(() => state.favourites()),

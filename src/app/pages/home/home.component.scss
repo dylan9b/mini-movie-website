@@ -1,5 +1,19 @@
 @use "colors" as *;
+@use "mixins" as *;
 
-h4 {
-  color: $neon-green;
+.home-container {
+  // grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: minmax(20em) 1fr;
+
+  // @include breakpoint("xlarge") {
+  //   grid-template-columns: repeat(6, 1fr);
+  // }
+
+  // @include breakpoint("xlarge") {
+  //   grid-template-columns: repeat(4, 1fr);
+  // }
+
+  // @include breakpoint("small") {
+  //   grid-template-columns: repeat(2, 1fr);
+  // }
 }

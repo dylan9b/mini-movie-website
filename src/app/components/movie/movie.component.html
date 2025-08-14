@@ -1,14 +1,14 @@
 <a
   [routerLink]="['/movies', movie().slug]"
   routerLinkActive="active text-info"
-  class="position-relative text-decoration-none d-grid"
+  class="relative text-decoration-none grid"
 >
   <img
     [src]="movieImageSignal()"
     alt="Game Image"
-    class="w-100 h-100"
-    width="100"
-    height="100"
+    class="w-full h-auto max-w-[15em] max-h-[15em] md:max-h-[20em]"
+    width="300"
+    height="445"
     decoding="async"
   />
 
@@ -20,14 +20,12 @@
       >{{ movie().tag | uppercase }}</span
     >
   } -->
-  @if (movie().id) {
-    <!-- Hover -->
-    <span
-      class="d-none d-md-block hover-background w-100 h-100 position-absolute top-0"
-    >
-      <div class="w-100 h-100 position-absolute">
+  <!-- Hover -->
+  <!-- @if (movie().id) {
+    <span class="hidden md:block hover-background w-100 h-100 absolute top-0">
+      <div class="w-100 h-100 absolute">
         <div
-          class="position-relative h-100 d-flex flex-column justify-content-between align-items-center p-4"
+          class="relative h-100 flex flex-col justify-between items-center p-4"
         >
           <p class="text-center mb-0 overflow-hidden fs-4">
             {{ movie().title }}
@@ -42,14 +40,14 @@
         </div>
       </div>
     </span>
-  }
+  } -->
 </a>
 
-<div
-  class="bg-white text-black d-flex flex-column align-items-center border border-1 border-top-0 justify-content-start d-md-none w-100 p-3 mobile-cta-container"
+<!-- <div
+  class="bg-white text-black flex flex-col items-center border border-top-0 justify-start md:hidden w-100 p-3 mobile-cta-container"
 >
   <p class="mb-0">{{ movie().title }}</p>
   <button (click)="onPlayForFun()" class="btn btn-primary w-100" type="button">
     Play for Fun
   </button>
-</div>
+</div> -->
