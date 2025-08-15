@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
+import { LastVisitedComponent } from '@components/last-visited/last-visited.component';
 import { SidenavComponent } from '@components/sidenav/sidenav.component';
 import { MovieStore } from '@store/movie.store';
 
@@ -21,6 +22,7 @@ import { MovieStore } from '@store/movie.store';
   imports: [
     RouterOutlet,
     SidenavComponent,
+    LastVisitedComponent,
     MatSidenavModule,
     MatButtonModule,
     MatToolbarModule,

@@ -15,10 +15,10 @@ import { MovieResponse } from '@pages/movies/_model/movie-response.model';
 import { MovieService } from '@services/movie.service';
 import { PlatformService } from '@services/platform.service';
 import { exhaustMap, pipe, tap } from 'rxjs';
-import { Item, MovieState, MovieStateFilter } from './movie.state';
+import { MovieState, MovieStateFilter } from './movie.state';
 
 const initialState: MovieState = {
-  favourites: {},
+  lastVisited: {},
   filter: {
     order: 'ASC',
     searchTerm: null,
@@ -31,12 +31,13 @@ const initialState: MovieState = {
     loadDelay: 500,
     loadOffset: 10,
     isMenuCollapsed: false,
+    totalLastVisited: 5,
   },
   isLoading: false,
   movies: {},
 };
 
-const FAV_ITEMS_LOCAL_STORAGE = 'favMovies';
+const VISITED_ITEMS_LOCAL_STORAGE = 'visitedMovies';
 
 export const MovieStore = signalStore(
   { providedIn: 'root' },
@@ -62,7 +63,7 @@ export const MovieStore = signalStore(
     });
 
     return {
-      favouritesSignal: computed(() => state.favourites()),
+      lastVisitedSignal: computed(() => Object.values(state.lastVisited())),
       searchTermSignal: computed(() => state.filter.searchTerm()),
       filterSignal: computed(() => state.filter()),
       moviesSignal,
@@ -84,43 +85,47 @@ export const MovieStore = signalStore(
       platformService = inject(PlatformService),
       movieService = inject(MovieService),
     ) => ({
-      addFavourite(id: Item['id']): void {
-        const favsInLocalStorage: Record<string, true> = JSON.parse(
-          platformService.localStorage?.getItem(FAV_ITEMS_LOCAL_STORAGE) ??
+      addVisited(movie: MovieResponse): void {
+        const lastVisitedInLocalStorage: MovieState['lastVisited'] = JSON.parse(
+          platformService.localStorage?.getItem(VISITED_ITEMS_LOCAL_STORAGE) ??
             '{}',
         );
 
-        if (favsInLocalStorage[id]) return;
+        const { slug } = movie;
 
-        favsInLocalStorage[id] = true;
-
-        platformService.localStorage?.setItem(
-          FAV_ITEMS_LOCAL_STORAGE,
-          JSON.stringify(favsInLocalStorage),
-        );
-
-        patchState(store, (state) => ({
-          favourites: {
-            ...state.favourites,
-            [id]: true,
+        // Add or update slug
+        lastVisitedInLocalStorage[slug] = {
+          data: {
+            ...movie,
+            accessDate: new Date(),
           },
-        }));
-      },
+        };
 
-      removeFavourite(id: Item['id']): void {
-        const favourites = { ...store.favourites() };
-        delete favourites[id];
+        // Convert to entries, sort, and limit to 5
+        const sortedEntries = Object.entries(lastVisitedInLocalStorage)
+          .sort(
+            ([, a], [, b]) =>
+              new Date(b.data.accessDate).getTime() -
+              new Date(a.data.accessDate).getTime(),
+          )
+          .slice(0, store.config.totalLastVisited());
 
+        // Rebuild object in sorted order
+        const sortedObject = Object.fromEntries(sortedEntries);
+
+        // Save back to localStorage
         platformService.localStorage?.setItem(
-          FAV_ITEMS_LOCAL_STORAGE,
-          JSON.stringify(favourites),
+          VISITED_ITEMS_LOCAL_STORAGE,
+          JSON.stringify(sortedObject),
         );
 
+        // Update store
         patchState(store, (state) => ({
           ...state,
-          favourites,
+          lastVisited: sortedObject,
         }));
       },
+
       updateFilter(filter: Partial<MovieStateFilter>): void {
         patchState(store, (state) => ({
           ...state,
@@ -181,8 +186,8 @@ export const MovieStore = signalStore(
       onInit(): void {
         store.loadMovies();
 
-        const favsInLocalStorage = JSON.parse(
-          platformService.localStorage?.getItem(FAV_ITEMS_LOCAL_STORAGE) ??
+        const lastVisitedInLocalStorage = JSON.parse(
+          platformService.localStorage?.getItem(VISITED_ITEMS_LOCAL_STORAGE) ??
             '{}',
         );
 
@@ -192,9 +197,9 @@ export const MovieStore = signalStore(
           route.snapshot.queryParamMap.getAll('genre') ?? null;
 
         patchState(store, (state) => ({
-          favourites: {
-            ...state.favourites,
-            ...favsInLocalStorage,
+          lastVisited: {
+            ...state.lastVisited,
+            ...lastVisitedInLocalStorage,
           },
           filter: {
             ...state.filter,

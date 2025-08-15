@@ -20,7 +20,6 @@
           "
         >
           @for (movie of moviesSignal(); track movie.id) {
-            <!-- <p>{{ movie.title }} - {{ movie.popularity }} - {{ movie.genres }}</p> -->
             <app-movie [movie]="movie"></app-movie>
           } @empty {
             <app-alert></app-alert>
@@ -33,19 +32,21 @@
         ></app-loading>
       }
 
-      <div class="flex items-center justify-center">
-        <button
-          type="button"
-          matButton="filled"
-          [class.!pointer-events-auto]="isLoadMoreDisabled()"
-          [class.cursor-pointer]="!isLoadMoreDisabled()"
-          [class.!cursor-not-allowed]="isLoadMoreDisabled()"
-          [disabled]="isLoadMoreDisabled()"
-          (click)="onLoadMoreClick()"
-        >
-          Load More
-        </button>
-      </div>
+      @if (moviesSignal().length) {
+        <div class="flex items-center justify-center">
+          <button
+            type="button"
+            matButton="filled"
+            [class.!pointer-events-auto]="isLoadMoreDisabled()"
+            [class.cursor-pointer]="!isLoadMoreDisabled()"
+            [class.!cursor-not-allowed]="isLoadMoreDisabled()"
+            [disabled]="isLoadMoreDisabled()"
+            (click)="onLoadMoreClick()"
+          >
+            Load More
+          </button>
+        </div>
+      }
     </div>
   </section>
 </section>

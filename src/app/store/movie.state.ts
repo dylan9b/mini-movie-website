@@ -1,8 +1,12 @@
 import { MovieResponse } from '@pages/movies/_model/movie-response.model';
 
 export interface MovieState {
-  // Added favourites object like this so that it's faster and easier to access an item by id rather than looping through the list.
-  favourites: Record<Item['id'], boolean>;
+  lastVisited: Record<
+    MovieResponse['slug'],
+    {
+      data: MovieResponse & { accessDate: Date };
+    }
+  >;
 
   isLoading: boolean;
   filter: MovieStateFilter;
@@ -12,12 +16,8 @@ export interface MovieState {
     loadDelay: number;
     loadOffset: number;
     isMenuCollapsed: boolean;
+    totalLastVisited: number;
   };
-}
-
-export interface Item {
-  id: MovieResponse['id'];
-  isFavourite: boolean;
 }
 
 export interface MovieStateFilter {

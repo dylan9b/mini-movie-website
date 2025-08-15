@@ -15,7 +15,7 @@
   </mat-sidenav>
 
   <!-- Content -->
-  <mat-sidenav-content>
+  <mat-sidenav-content class="p-4 flex">
     <!-- Small hamburger outside drawer for collapsed state -->
     <button
       type="button"
@@ -26,8 +26,9 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="content overflow-hidden md:overflow-y-auto">
+    <div class="overflow-hidden md:overflow-y-auto flex flex-col gap-5 flex-1">
       <router-outlet></router-outlet>
+      <app-last-visited></app-last-visited>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

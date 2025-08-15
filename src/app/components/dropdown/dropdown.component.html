@@ -5,15 +5,17 @@
     multiple
     (selectionChange)="onGenreChange($event)"
   >
-    <button
-      type="button"
-      mat-button
-      matButton="filled"
-      class="w-full"
-      (click)="onClearGenres()"
-    >
-      Clear All
-    </button>
+    <div class="px-4">
+      <button
+        type="button"
+        mat-button
+        matButton="filled"
+        class="w-full"
+        (click)="onClearGenres()"
+      >
+        Clear All
+      </button>
+    </div>
 
     <mat-select-trigger>
       {{ selectedGenresSignal()?.[0] ?? "" }}

@@ -12,7 +12,7 @@
   />
 
   <!-- GENRES -->
-  <mat-chip-set aria-label="Fish selection">
+  <mat-chip-set aria-label="Genre selection">
     @for (genre of movieDetailSignal()?.genres; track genre) {
       <mat-chip>{{ genre }}</mat-chip>
     } @empty {
@@ -21,12 +21,20 @@
   </mat-chip-set>
 
   <!-- POPULARITY -->
-  <p class="m-0 font-bold text-2xl">
-    {{ movieDetailSignal()?.popularity | number: "1.0-2" }}
+  <p class="m-0 text-2xl">
+    Rating of
+    <span class="font-bold">
+      {{ movieDetailSignal()?.popularity | number: "1.2-2" }}
+    </span>
   </p>
 
   <!-- BUDGET -->
   <p class="m-0 font-bold text-xl">
-    Budget: {{ movieDetailSignal()?.budget | currency: "EUR" }}
+    Budget:
+    {{
+      movieDetailSignal()?.budget
+        ? (movieDetailSignal()?.budget | currency: "EUR")
+        : "Not Available"
+    }}
   </p>
 </article>

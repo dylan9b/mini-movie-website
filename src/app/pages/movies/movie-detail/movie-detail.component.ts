@@ -55,6 +55,7 @@ export class MovieDetailComponent implements OnInit {
       )
       .subscribe((movie) => {
         this.movieDetailSignal.set(movie);
+        this._store.addVisited(movie);
       });
   }
 }

@@ -1,0 +1,27 @@
+<section class="flex flex-col gap-8">
+  <h1 class="m-0 font-medium text-2xl">Last Visited Movies</h1>
+
+  <div
+    class="grid gap-3"
+    [class.grid-cols-2]="isMobileSignal()"
+    [class.md:grid-cols-8]="isMenuCollapsedSignal()"
+    [class.md:grid-cols-7]="!isMenuCollapsedSignal()"
+  >
+    @for (
+      movie of lastVisitedSignal();
+      track movie.data.id;
+      let movieIndex = $index
+    ) {
+      <app-movie
+        [movie]="movie.data"
+        [class.md:col-start-3]="movieIndex === 0 && !isMenuCollapsedSignal()"
+        [class.md:col-start-4]="movieIndex === 0 && isMenuCollapsedSignal()"
+      ></app-movie>
+    }
+    @for (i of placeholdersSignal(); track $index) {
+      <div
+        class="w-[15em] h-[15em] md:h-[20em] bg-gray-400/30 animate-pulse rounded"
+      ></div>
+    }
+  </div>
+</section>

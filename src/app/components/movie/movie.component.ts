@@ -1,4 +1,3 @@
-import { NgClass, UpperCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,7 +9,7 @@ import { MovieResponse } from '@pages/movies/_model/movie-response.model';
 
 @Component({
   selector: 'app-movie',
-  imports: [UpperCasePipe, RouterLink, NgClass],
+  imports: [RouterLink],
   templateUrl: './movie.component.html',
   styleUrl: './movie.component.scss',
   standalone: true,
