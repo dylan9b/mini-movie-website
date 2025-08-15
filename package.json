@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "prettier": "prettier --write \"src/**/*.{ts,html,scss}\"",
-    "prettier:check": "prettier --check \"src/**/*.{ts,html,scss}\""
+    "prettier:check": "prettier --check \"src/**/*.{ts,html,scss}\"",
+    "serve": "serve -s dist/mini-movie-website/browser"
   },
   "overrides": {
     "@angular/common": "$@angular/common",
@@ -60,6 +61,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.6.2",
     "sass": "^1.90.0",
+    "serve": "^14.2.4",
     "typescript": "~5.8.2",
     "typescript-eslint": "8.34.1"
   }

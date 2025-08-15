@@ -18,8 +18,22 @@
         [class.md:col-start-4]="movieIndex === 0 && isMenuCollapsedSignal()"
       ></app-movie>
     }
-    @for (i of placeholdersSignal(); track $index) {
+    @for (
+      i of placeholdersSignal();
+      track placeHolderIndex;
+      let placeHolderIndex = $index
+    ) {
       <div
+        [class.md:col-start-3]="
+          placeHolderIndex === 0 &&
+          !lastVisitedSignal().length &&
+          !isMenuCollapsedSignal()
+        "
+        [class.md:col-start-4]="
+          placeHolderIndex === 0 &&
+          !lastVisitedSignal().length &&
+          isMenuCollapsedSignal()
+        "
         class="w-[15em] h-[15em] md:h-[20em] bg-gray-400/30 animate-pulse rounded"
       ></div>
     }
