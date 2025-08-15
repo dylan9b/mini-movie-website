@@ -1,1 +1,32 @@
-<p>movie-detail works!</p>
+<article class="flex flex-col gap-8 items-center justify-center">
+  <h1 class="m-0 text-4xl font-bold">{{ movieDetailSignal()?.title }}</h1>
+
+  <img
+    [src]="movieDetailSignal()?.image?.url"
+    alt="{{ movieDetailSignal()?.title + ' Image' }}"
+    class="w-full md:w-80 opacity-0 transition-opacity duration-500 rounded"
+    [class.opacity-100]="isImageLoaded || isImageBroken"
+    decoding="async"
+    (load)="isImageLoaded = true"
+    (error)="isImageBroken = true"
+  />
+
+  <!-- GENRES -->
+  <mat-chip-set aria-label="Fish selection">
+    @for (genre of movieDetailSignal()?.genres; track genre) {
+      <mat-chip>{{ genre }}</mat-chip>
+    } @empty {
+      <mat-chip>Genres not found</mat-chip>
+    }
+  </mat-chip-set>
+
+  <!-- POPULARITY -->
+  <p class="m-0 font-bold text-2xl">
+    {{ movieDetailSignal()?.popularity | number: "1.0-2" }}
+  </p>
+
+  <!-- BUDGET -->
+  <p class="m-0 font-bold text-xl">
+    Budget: {{ movieDetailSignal()?.budget | currency: "EUR" }}
+  </p>
+</article>

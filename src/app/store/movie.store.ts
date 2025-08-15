@@ -11,6 +11,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { MovieResponse } from '@pages/movies/_model/movie-response.model';
 import { MovieService } from '@services/movie.service';
 import { PlatformService } from '@services/platform.service';
 import { exhaustMap, pipe, tap } from 'rxjs';
@@ -32,7 +33,7 @@ const initialState: MovieState = {
     isMenuCollapsed: false,
   },
   isLoading: false,
-  movies: [],
+  movies: {},
 };
 
 const FAV_ITEMS_LOCAL_STORAGE = 'favMovies';
@@ -46,8 +47,7 @@ export const MovieStore = signalStore(
       const searchTerm = (state.filter().searchTerm ?? '').toLowerCase();
       const selectedGenres = state.filter().genre ?? [];
 
-      return state
-        .movies()
+      return Object.values(state.movies())
         .filter((movie) => {
           const matchesSearch =
             !searchTerm || movie.title.toLowerCase().includes(searchTerm);
@@ -72,8 +72,7 @@ export const MovieStore = signalStore(
         ),
       ),
       topMoviesSignal: computed(() =>
-        state
-          .movies()
+        Object.values(state.movies())
           .sort((a, b) => b.popularity - a.popularity)
           .slice(0, 10),
       ),
@@ -152,7 +151,17 @@ export const MovieStore = signalStore(
           exhaustMap(() => {
             return movieService.getAll$().pipe(
               tapResponse({
-                next: (movies) => patchState(store, { movies }),
+                next: (movies) => {
+                  // key-value pair having key set as the slug
+                  const moviesById = movies.reduce<
+                    Record<string, MovieResponse>
+                  >((acc, movie) => {
+                    acc[movie.slug] = movie;
+                    return acc;
+                  }, {});
+
+                  patchState(store, { movies: moviesById });
+                },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),
               }),

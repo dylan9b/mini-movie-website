@@ -6,7 +6,7 @@ export interface MovieState {
 
   isLoading: boolean;
   filter: MovieStateFilter;
-  movies: MovieResponse[];
+  movies: Record<string, MovieResponse>;
 
   config: {
     loadDelay: number;
