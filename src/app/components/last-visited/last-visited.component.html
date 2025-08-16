@@ -3,7 +3,7 @@
 
   <div
     class="grid gap-3"
-    [class.grid-cols-2]="isMobileSignal()"
+    [class.grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))]]="isMobileSignal()"
     [class.md:grid-cols-8]="isMenuCollapsedSignal()"
     [class.md:grid-cols-7]="!isMenuCollapsedSignal()"
   >
@@ -34,8 +34,12 @@
           !lastVisitedSignal().length &&
           isMenuCollapsedSignal()
         "
-        class="w-[15em] h-[15em] md:h-[20em] bg-gray-400/30 animate-pulse rounded"
-      ></div>
+        class="flex items-center justify-center w-full md:w-[15em] h-[15em] md:h-[20em] bg-gray-400/10 rounded text-gray-400/10 font-bold"
+      >
+        <span class="text-8xl">
+          {{ placeHolderIndex + lastVisitedSignal().length + 1 }}
+        </span>
+      </div>
     }
   </div>
 </section>

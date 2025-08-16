@@ -7,7 +7,7 @@
   <img
     [src]="movieImageSignal()"
     alt="{{ movie().title + ' Image' }}"
-    class="w-[15em] h-[15em] md:h-[20em] opacity-0 transition-opacity duration-500 rounded"
+    class="w-full md:w-[15em] h-[15em] md:h-[20em] opacity-0 transition-opacity duration-500 rounded"
     [class.opacity-100]="isImageLoaded || isImageBroken"
     width="300"
     height="445"

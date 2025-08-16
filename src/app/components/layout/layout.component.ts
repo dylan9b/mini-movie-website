@@ -7,15 +7,22 @@ import {
   inject,
   ViewChild,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
+import { HeaderComponent } from '@components/header/header.component';
 import { LastVisitedComponent } from '@components/last-visited/last-visited.component';
 import { SidenavComponent } from '@components/sidenav/sidenav.component';
 import { MovieStore } from '@store/movie.store';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -27,6 +34,7 @@ import { MovieStore } from '@store/movie.store';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    HeaderComponent,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
@@ -39,7 +47,23 @@ export class LayoutComponent implements AfterViewInit {
   private readonly _store = inject(MovieStore);
   protected readonly isMenuCollapsedSignal = this._store.config.isMenuCollapsed;
 
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
   @ViewChild('drawer') drawer!: MatSidenav;
+
+  readonly titleSignal = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => {
+        let child = this.route.firstChild;
+        while (child?.firstChild) {
+          child = child.firstChild;
+        }
+        return child?.snapshot?.data?.['title'] || '';
+      }),
+    ),
+  );
 
   toggleSidenav(): void {
     this._store.updateIsMenuCollapsed(!this.isMenuCollapsedSignal());

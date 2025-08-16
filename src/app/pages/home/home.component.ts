@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MovieComponent } from '@components/movie/movie.component';
-import { TitleComponent } from '@components/title/title.component';
 import { MovieStore } from '@store/movie.store';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [MovieComponent, TitleComponent],
+  imports: [MovieComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -12,6 +12,9 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () =>
           import('./pages/home/home.component').then((c) => c.HomeComponent),
+        data: {
+          title: 'Home',
+        },
       },
       {
         path: 'movies',
@@ -19,6 +22,9 @@ export const routes: Routes = [
           import('./pages/movies/movies.component').then(
             (c) => c.MoviesComponent,
           ),
+        data: {
+          title: 'All Movies',
+        },
       },
       {
         path: 'movies/:slug',

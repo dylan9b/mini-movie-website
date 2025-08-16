@@ -16,17 +16,8 @@
 
   <!-- Content -->
   <mat-sidenav-content class="p-4 flex">
-    <!-- Small hamburger outside drawer for collapsed state -->
-    <button
-      type="button"
-      mat-icon-button
-      (click)="toggleSidenav()"
-      class="ml-4"
-    >
-      <mat-icon>menu</mat-icon>
-    </button>
-
-    <div class="overflow-hidden md:overflow-y-auto flex flex-col gap-5 flex-1">
+    <div class="overflow-hidden md:overflow-y-auto flex flex-col flex-1">
+      <app-header class="mb-8" [value]="titleSignal()"></app-header>
       <router-outlet></router-outlet>
       <app-last-visited></app-last-visited>
     </div>
