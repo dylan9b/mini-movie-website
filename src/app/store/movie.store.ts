@@ -20,11 +20,9 @@ import { MovieState, MovieStateFilter } from './movie.state';
 const initialState: MovieState = {
   lastVisited: {},
   filter: {
-    order: 'ASC',
     searchTerm: null,
     first: 10,
     offset: 0,
-    sortBy: null,
     genre: null,
   },
   config: {
@@ -64,8 +62,6 @@ export const MovieStore = signalStore(
 
     return {
       lastVisitedSignal: computed(() => Object.values(state.lastVisited())),
-      searchTermSignal: computed(() => state.filter.searchTerm()),
-      filterSignal: computed(() => state.filter()),
       moviesSignal,
       genreSignal: computed(() =>
         [...new Set(moviesSignal().flatMap((movie) => movie.genres))].sort(

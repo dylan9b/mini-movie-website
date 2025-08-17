@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideZonelessChangeDetection } from '@angular/core';
 import { AlertComponent } from './alert.component';
 
 describe('AlertComponent', () => {
@@ -9,6 +10,7 @@ describe('AlertComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AlertComponent],
+      providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AlertComponent);

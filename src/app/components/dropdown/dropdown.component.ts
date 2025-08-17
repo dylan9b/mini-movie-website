@@ -13,6 +13,7 @@ import { MovieStore } from '@store/movie.store';
 })
 export class DropdownComponent {
   private readonly _store = inject(MovieStore);
+
   protected readonly genreSignal = this._store.genreSignal;
   protected readonly selectedGenresSignal = this._store.filter.genre;
 

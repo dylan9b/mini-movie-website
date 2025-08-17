@@ -45,18 +45,15 @@ export class LayoutComponent implements AfterViewInit {
   private readonly _breakpointObserver = inject(BreakpointObserver);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _store = inject(MovieStore);
+  private readonly _router = inject(Router);
+  private readonly _route = inject(ActivatedRoute);
+
   protected readonly isMenuCollapsedSignal = this._store.config.isMenuCollapsed;
-
-  private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
-
-  @ViewChild('drawer') drawer!: MatSidenav;
-
-  readonly titleSignal = toSignal(
-    this.router.events.pipe(
+  protected readonly titleSignal = toSignal(
+    this._router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       map(() => {
-        let child = this.route.firstChild;
+        let child = this._route.firstChild;
         while (child?.firstChild) {
           child = child.firstChild;
         }
@@ -64,6 +61,8 @@ export class LayoutComponent implements AfterViewInit {
       }),
     ),
   );
+
+  @ViewChild('drawer') drawer!: MatSidenav;
 
   toggleSidenav(): void {
     this._store.updateIsMenuCollapsed(!this.isMenuCollapsedSignal());

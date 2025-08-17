@@ -22,8 +22,6 @@ export interface MovieState {
 
 export interface MovieStateFilter {
   searchTerm: string | null;
-  order: 'ASC' | 'DESC';
-  sortBy: string | null;
   first: number;
   offset: number;
   genre: string[] | null;

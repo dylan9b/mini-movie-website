@@ -35,10 +35,10 @@
           <button
             type="button"
             matButton="filled"
-            [class.!pointer-events-auto]="isLoadMoreDisabled()"
-            [class.cursor-pointer]="!isLoadMoreDisabled()"
-            [class.!cursor-not-allowed]="isLoadMoreDisabled()"
-            [disabled]="isLoadMoreDisabled()"
+            [class.!pointer-events-auto]="isLoadMoreDisabledSignal()"
+            [class.cursor-pointer]="!isLoadMoreDisabledSignal()"
+            [class.!cursor-not-allowed]="isLoadMoreDisabledSignal()"
+            [disabled]="isLoadMoreDisabledSignal()"
             (click)="onLoadMoreClick()"
           >
             Load More

@@ -24,9 +24,10 @@ import { debounceTime, distinctUntilChanged, fromEvent, map, tap } from 'rxjs';
 })
 export class SearchComponent implements AfterViewInit {
   private readonly _store = inject(MovieStore);
-  protected readonly searchTermSignal = this._store.searchTermSignal;
   private readonly _loadDelaySignal = this._store.config.loadDelay;
   private readonly _destroyRef = inject(DestroyRef);
+
+  protected readonly searchTermSignal = this._store.filter.searchTerm;
 
   @ViewChild('searchInput', { static: true })
   searchInput!: ElementRef<HTMLInputElement>;

@@ -31,22 +31,23 @@ import { MovieStore } from '@store/movie.store';
 })
 export class MoviesComponent {
   private readonly _store = inject(MovieStore);
+
   protected readonly isLoadingSignal = this._store.isLoading;
   protected readonly loadOffsetSignal = this._store.config.loadOffset;
   protected readonly moviesSignal = this._store.moviesSignal;
 
   @ViewChild('loadMoreBtn') loadMoreBtn!: MatButton;
 
-  protected readonly isLoadMoreDisabled = computed(
+  protected readonly isLoadMoreDisabledSignal = computed(
     () =>
       this.moviesSignal().length <
-      this._store.filterSignal().first + this._store.filterSignal().offset,
+      this._store.filter.first() + this._store.filter.offset(),
   );
 
   onLoadMoreClick(): void {
-    if (!this.isLoadMoreDisabled()) {
+    if (!this.isLoadMoreDisabledSignal()) {
       this._store.updateFilter({
-        offset: this._store.filterSignal().offset + this.loadOffsetSignal(),
+        offset: this._store.filter.offset() + this.loadOffsetSignal(),
       });
     }
   }
