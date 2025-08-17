@@ -42,39 +42,49 @@ export const MovieStore = signalStore(
   withState(initialState),
   withDevtools('movie'),
   withComputed((state) => {
-    const moviesSignal = computed(() => {
+    const allMoviesSignal = computed(() => Object.values(state.movies()));
+
+    // Movies filtered by search term and selected genres, **before pagination**
+    const filteredMoviesBeforePagination = computed(() => {
       const searchTerm = (state.filter().searchTerm ?? '').toLowerCase();
       const selectedGenres = state.filter().genre ?? [];
 
-      return Object.values(state.movies())
-        .filter((movie) => {
-          const matchesSearch =
-            !searchTerm || movie.title.toLowerCase().includes(searchTerm);
+      return allMoviesSignal().filter((movie) => {
+        const matchesSearch =
+          !searchTerm || movie.title.toLowerCase().includes(searchTerm);
+        const matchesGenres =
+          !selectedGenres.length ||
+          movie.genres.some((genre) => selectedGenres.includes(genre));
+        return matchesSearch && matchesGenres;
+      });
+    });
 
-          const matchesGenres =
-            !selectedGenres.length ||
-            movie.genres.some((genre) => selectedGenres.includes(genre));
+    // Movies after pagination
+    const moviesSignal = computed(() => {
+      const first = state.filter().first;
+      const offset = state.filter().offset;
+      return filteredMoviesBeforePagination().slice(0, first + offset);
+    });
 
-          return matchesSearch && matchesGenres;
-        })
-        .slice(0, state.filter().first + state.filter().offset);
+    // Genre list should depend on filtered movies **before pagination**
+    const genreSignal = computed(() => {
+      return [
+        ...new Set(filteredMoviesBeforePagination().flatMap((m) => m.genres)),
+      ].sort((a, b) => (a > b ? 1 : -1));
     });
 
     return {
       lastVisitedSignal: computed(() => Object.values(state.lastVisited())),
+      genreSignal,
       moviesSignal,
-      genreSignal: computed(() =>
-        [...new Set(moviesSignal().flatMap((movie) => movie.genres))].sort(
-          (a, b) => (a > b ? 1 : -1),
-        ),
-      ),
       topMoviesSignal: computed(() =>
-        Object.values(state.movies())
+        allMoviesSignal()
           .sort((a, b) => b.popularity - a.popularity)
           .slice(0, 10),
       ),
     };
   }),
+
   withMethods(
     (
       store,
