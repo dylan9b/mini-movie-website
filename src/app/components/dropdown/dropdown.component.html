@@ -3,15 +3,16 @@
   <mat-select
     [value]="selectedGenresSignal()"
     multiple
+    #genreSelect
     (selectionChange)="onGenreChange($event)"
   >
-    <div class="px-4">
+    <div class="p-4">
       <button
         type="button"
         mat-button
         matButton="filled"
         class="w-full"
-        (click)="onClearGenres()"
+        (click)="onClearGenres(); genreSelect.close()"
       >
         Clear All
       </button>
