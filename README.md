@@ -68,6 +68,9 @@ For more information on using the Angular CLI, including detailed command refere
 
 <img width="653" height="341" alt="image" src="https://github.com/user-attachments/assets/1a98ee4b-330e-4b9e-95d8-a21e292ae690" />
 
+### Redux (NGRX)
+<img width="653" height="341" alt="image" src="https://github.com/user-attachments/assets/85625a92-5932-4df7-be67-47bd92aeefc6" />
+
 ### Tests
 
 <img width="653" height="341" alt="image" src="https://github.com/user-attachments/assets/94064e9f-4156-4eb5-9383-ea208e86f26d" />
