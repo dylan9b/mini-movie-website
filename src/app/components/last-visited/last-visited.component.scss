@@ -70,9 +70,14 @@
         }
 
         &.no-visited {
-          height: 4em;
+          height: 9em;
+          padding: 3em 0;
 
           @include breakpoint("medium") {
+            padding: 0;
+          }
+
+          @include breakpoint("xsmall") {
             height: 3em;
           }
         }
