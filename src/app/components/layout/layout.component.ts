@@ -75,7 +75,7 @@ export class LayoutComponent implements AfterViewInit {
   // Automatically collapse on mobile
   ngAfterViewInit() {
     this._breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe([Breakpoints.Handset, Breakpoints.Tablet])
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((result) => {
         if (result.matches) {
