@@ -1,19 +1,22 @@
 @use "mixins" as *;
 
+:host {
+  aspect-ratio: 2/3;
+}
 a {
   text-decoration: none;
   height: 100%;
   justify-content: center;
 
   &.no-image-bg {
-    background-color: lightgray;
+    background-color: rgba(156, 163, 175, 0.1);
     display: flex;
     border-radius: 0.25rem;
   }
 
   img {
     width: 100%;
-    height: 20rem;
+    height: 100%;
     opacity: 0;
     transition-property: opacity;
     transition-duration: 500ms;

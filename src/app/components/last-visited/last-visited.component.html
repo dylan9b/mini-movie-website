@@ -3,7 +3,7 @@
 
   <div
     class="movies-grid"
-    [class.grid-cols-8]="isMenuCollapsedSignal()"
+    [class.menu-collapsed]="isMenuCollapsedSignal()"
     [class.grid-cols-7]="!isMenuCollapsedSignal()"
   >
     @for (
@@ -31,7 +31,7 @@
           !lastVisitedSignal().length &&
           !isMenuCollapsedSignal()
         "
-        [class.col-start-4]="
+        [class.menu-collapsed]="
           placeHolderIndex === 0 &&
           !lastVisitedSignal().length &&
           isMenuCollapsedSignal()

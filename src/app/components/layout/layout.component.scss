@@ -31,7 +31,7 @@ mat-sidenav-container {
       flex: 1;
       overflow-y: auto;
 
-      padding: 0 4em;
+      padding: 4em;
 
       @include breakpoint("medium") {
         padding: 1em;
@@ -39,10 +39,6 @@ mat-sidenav-container {
 
       app-header {
         margin-bottom: 2rem;
-      }
-
-      app-last-visited {
-        margin-top: 4em;
       }
     }
   }
