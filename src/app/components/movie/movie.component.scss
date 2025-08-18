@@ -23,7 +23,7 @@ a {
     border-radius: 0.25rem;
 
     @include breakpoint("medium") {
-      height: 15rem;
+      // height: 15rem;
     }
 
     &.loaded {

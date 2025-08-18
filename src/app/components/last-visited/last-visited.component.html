@@ -1,11 +1,11 @@
 <section>
-  <h1>Last Visited Movies</h1>
-
   <div
     class="movies-grid"
     [class.menu-collapsed]="isMenuCollapsedSignal()"
     [class.grid-cols-7]="!isMenuCollapsedSignal()"
   >
+    <h1>Last Visited Movies</h1>
+
     @for (
       movie of lastVisitedSignal();
       track movie.data.id;
