@@ -97,3 +97,14 @@ For more information on using the Angular CLI, including detailed command refere
 ### Movie Page
 
 <img width="1107" height="923" alt="image" src="https://github.com/user-attachments/assets/24466ba9-fbce-427d-90d2-5ff46c3259e2" />
+
+## Steps to execute
+```bash
+npm install
+npm run lint
+npm run prettier
+npm run test
+npm run ng serve (locally)
+npm run build
+npm run serve (prod)
+```
