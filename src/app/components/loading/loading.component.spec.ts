@@ -1,4 +1,3 @@
-// loading.component.spec.ts
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MovieStore } from '@store/movie.store';
@@ -8,16 +7,15 @@ describe('LoadingComponent', () => {
   let component: LoadingComponent;
   let fixture: ComponentFixture<LoadingComponent>;
 
-  // Mock store
   const mockStore = {
     config: {
-      loadOffset: signal(42), // provide a test signal value
+      loadOffset: signal(42),
     },
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoadingComponent], // standalone component
+      imports: [LoadingComponent],
       providers: [
         { provide: MovieStore, useValue: mockStore },
         provideZonelessChangeDetection(),

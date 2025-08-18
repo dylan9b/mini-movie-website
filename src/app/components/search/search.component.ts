@@ -39,14 +39,22 @@ export class SearchComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     fromEvent(this.searchInput.nativeElement, 'input')
       .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
         tap(() => this._store.updateIsLoading(true)),
-        map((event: Event) => (event.target as HTMLInputElement).value.trim()),
         debounceTime(this._loadDelaySignal()),
         distinctUntilChanged(),
         takeUntilDestroyed(this._destroyRef),
       )
-      .subscribe((searchTerm) => {
+      .subscribe((rawValue) => {
+        const searchTerm = rawValue.trim();
+
         this._store.updateIsLoading(false);
+
+        if (!searchTerm) {
+          this._store.updateFilter({ searchTerm: null });
+          return;
+        }
+
         this._store.updateFilter({ searchTerm });
       });
   }

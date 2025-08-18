@@ -1,11 +1,7 @@
-<section class="flex flex-col gap-6">
-  <div
-    class="grid gap-3 grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))] md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]"
-  >
+<section>
+  <div>
     @for (movie of topMoviesSignal(); track movie.id) {
       <app-movie [movie]="movie"></app-movie>
-    } @empty {
-      <h1 class="text-black">No movies available.</h1>
     }
   </div>
 </section>

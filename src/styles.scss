@@ -4,9 +4,9 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use "@angular/material" as mat;
-@use "tailwind-custom";
 @use "colors";
 @use "mixins";
+@use "animations" as *;
 
 html {
   @include mat.theme(
@@ -43,7 +43,22 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

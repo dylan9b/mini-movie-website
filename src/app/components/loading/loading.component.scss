@@ -1,0 +1,22 @@
+@use "mixins" as *;
+
+section {
+  display: grid;
+  gap: 0.75rem;
+
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+
+  @include breakpoint("medium") {
+    grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
+  }
+
+  div {
+    border-radius: 0.25rem;
+    height: 20rem;
+    background-color: color-mix(in oklab, lightgray 30%, transparent);
+
+    @include breakpoint("medium") {
+      height: 15rem;
+    }
+  }
+}

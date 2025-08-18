@@ -1,23 +1,18 @@
-<mat-sidenav-container
-  class="app-container h-full"
-  (backdropClick)="onBackDropClick()"
-  autosize
->
+<mat-sidenav-container (backdropClick)="onBackDropClick()" autosize>
   <!-- Sidenav -->
   <mat-sidenav
     #drawer
     [mode]="'side'"
     [opened]="!isMenuCollapsedSignal()"
     class="sidenav"
-    class="p-4 !w-full md:!w-1/4 lg:!w-1/8 !border-r-2 !rounded-none !border-gray-400/30 !bg-black"
   >
     <app-sidenav></app-sidenav>
   </mat-sidenav>
 
   <!-- Content -->
-  <mat-sidenav-content class="p-4 flex">
-    <div class="overflow-hidden md:overflow-y-auto flex flex-col flex-1">
-      <app-header class="mb-8" [value]="titleSignal()"></app-header>
+  <mat-sidenav-content>
+    <div>
+      <app-header [value]="titleSignal()"></app-header>
       <router-outlet></router-outlet>
       <app-last-visited></app-last-visited>
     </div>

@@ -66,7 +66,7 @@ export const MovieStore = signalStore(
       return filteredMoviesBeforePagination().slice(0, first + offset);
     });
 
-    // Genre list should depend on filtered movies **before pagination**
+    // Genre list should depend on filtered movies **before pagination**, because pagination is only for UI purposes.
     const genreSignal = computed(() => {
       return [
         ...new Set(filteredMoviesBeforePagination().flatMap((m) => m.genres)),

@@ -1,10 +1,38 @@
 @use "colors" as *;
+@use "mixins" as *;
 
 :host {
   --mat-sys-on-surface: #{$white};
   --mat-icon-color: #{$white};
+
+  .active {
+    --mat-sys-on-surface: #{$neon-green};
+  }
 }
 
-.active {
-  --mat-sys-on-surface: #{$neon-green};
+section {
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      display: none;
+
+      @include breakpoint("medium") {
+        display: inline-flex;
+      }
+    }
+  }
+
+  mat-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    a {
+      text-align: center;
+    }
+  }
 }

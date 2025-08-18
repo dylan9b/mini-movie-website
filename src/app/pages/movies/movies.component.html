@@ -1,50 +1,36 @@
-<section class="flex flex-col gap-6">
-  <section class="flex gap-4 flex-col">
-    <div class="flex flex-col md:flex-row gap-4 w-full">
-      <app-search class="md:flex-[0.8]"> </app-search>
-      <app-dropdown class="md:flex-[0.2]"></app-dropdown>
-    </div>
+<section>
+  <div class="filter-container">
+    <app-search></app-search>
+    <app-dropdown></app-dropdown>
+  </div>
 
-    <div class="flex flex-col gap-8">
-      @if (!isLoadingSignal()) {
-        <div
-          class="grid gap-3"
-          [class.grid-cols-1]="!moviesSignal().length"
-          [class.grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))]]="
-            moviesSignal().length
-          "
-          [class.md:grid-cols-[repeat(auto-fill,_minmax(15em,_1fr))]]="
-            moviesSignal().length
-          "
+  <div class="movies-container">
+    @if (!isLoadingSignal()) {
+      <div class="items" [class.no-items]="!moviesSignal().length">
+        @for (movie of moviesSignal(); track movie.id) {
+          <app-movie [movie]="movie"></app-movie>
+        } @empty {
+          <app-alert></app-alert>
+        }
+      </div>
+    } @else {
+      <app-loading></app-loading>
+    }
+
+    @if (moviesSignal().length) {
+      <div class="load-more-btn-container">
+        <button
+          type="button"
+          matButton="filled"
+          [class.!pointer-events-auto]="isLoadMoreDisabledSignal()"
+          [class.cursor-pointer]="!isLoadMoreDisabledSignal()"
+          [class.!cursor-not-allowed]="isLoadMoreDisabledSignal()"
+          [disabled]="isLoadMoreDisabledSignal()"
+          (click)="onLoadMoreClick()"
         >
-          @for (movie of moviesSignal(); track movie.id) {
-            <app-movie [movie]="movie"></app-movie>
-          } @empty {
-            <app-alert></app-alert>
-          }
-        </div>
-      } @else {
-        <app-loading
-          class="opacity-100 transition-opacity duration-500"
-          [class.opacity-0]="moviesSignal().length"
-        ></app-loading>
-      }
-
-      @if (moviesSignal().length) {
-        <div class="flex items-center justify-center">
-          <button
-            type="button"
-            matButton="filled"
-            [class.!pointer-events-auto]="isLoadMoreDisabledSignal()"
-            [class.cursor-pointer]="!isLoadMoreDisabledSignal()"
-            [class.!cursor-not-allowed]="isLoadMoreDisabledSignal()"
-            [disabled]="isLoadMoreDisabledSignal()"
-            (click)="onLoadMoreClick()"
-          >
-            Load More
-          </button>
-        </div>
-      }
-    </div>
-  </section>
+          Load More
+        </button>
+      </div>
+    }
+  </div>
 </section>

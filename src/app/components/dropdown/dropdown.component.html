@@ -1,4 +1,4 @@
-<mat-form-field class="w-full">
+<mat-form-field>
   <mat-label>Genre</mat-label>
   <mat-select
     [value]="selectedGenresSignal()"
@@ -6,12 +6,11 @@
     #genreSelect
     (selectionChange)="onGenreChange($event)"
   >
-    <div class="p-4">
+    <div class="clear-btn">
       <button
         type="button"
         mat-button
         matButton="filled"
-        class="w-full"
         (click)="onClearGenres(); genreSelect.close()"
       >
         Clear All
@@ -21,7 +20,7 @@
     <mat-select-trigger>
       {{ selectedGenresSignal()?.[0] ?? "" }}
       @if ((selectedGenresSignal()?.length || 0) > 1) {
-        <span class="example-additional-selection">
+        <span>
           (+{{ (selectedGenresSignal()?.length || 0) - 1 }}
           {{ selectedGenresSignal()?.length === 2 ? "other" : "others" }})
         </span>

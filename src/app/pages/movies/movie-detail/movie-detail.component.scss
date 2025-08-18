@@ -1,0 +1,50 @@
+@use "mixins" as *;
+
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 2.25rem;
+
+    @include breakpoint("medium") {
+      font-size: 1.5rem;
+    }
+  }
+
+  img {
+    width: 20rem;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 500ms;
+    border-radius: 0.25rem;
+
+    @include breakpoint("medium") {
+      width: 100%;
+    }
+
+    &.loaded {
+      opacity: 1;
+    }
+  }
+
+  .popularity {
+    margin: 0;
+    font-size: 1.5rem;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .budget {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+}

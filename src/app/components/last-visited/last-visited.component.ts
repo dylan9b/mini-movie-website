@@ -5,7 +5,6 @@ import {
   inject,
 } from '@angular/core';
 import { MovieComponent } from '@components/movie/movie.component';
-import { LayoutService } from '@services/layout.service';
 import { MovieStore } from '@store/movie.store';
 
 @Component({
@@ -18,11 +17,9 @@ import { MovieStore } from '@store/movie.store';
 })
 export class LastVisitedComponent {
   private readonly _store = inject(MovieStore);
-  private readonly _layoutService = inject(LayoutService);
 
   protected readonly lastVisitedSignal = this._store.lastVisitedSignal;
   protected readonly isMenuCollapsedSignal = this._store.config.isMenuCollapsed;
-  protected readonly isMobileSignal = this._layoutService.isMobileSignal;
   protected readonly placeholdersSignal = computed(() => {
     return Array.from({ length: 5 - this.lastVisitedSignal().length });
   });

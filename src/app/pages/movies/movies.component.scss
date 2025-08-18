@@ -1,6 +1,77 @@
 @use "colors" as *;
+@use "mixins" as *;
 
 :host {
   --mat-button-filled-label-text-color: #{$neon-green};
   --mat-button-filled-container-color: #{$black};
+}
+
+section {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  .filter-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+
+    @include breakpoint("medium") {
+      flex-direction: column;
+    }
+
+    app-search {
+      flex: 0.8;
+
+      @include breakpoint("medium") {
+        flex: 1;
+      }
+    }
+
+    app-dropdown {
+      flex: 0.2;
+
+      @include breakpoint("medium") {
+        flex: 1;
+      }
+    }
+  }
+
+  .movies-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    app-loading {
+      opacity: 1;
+      transition: opacity;
+      transition-duration: 500ms;
+
+      &.hide {
+        opacity: 0;
+      }
+    }
+
+    .items {
+      display: grid;
+      gap: 0.75rem;
+
+      &.no-items {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+
+      grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+
+      @include breakpoint("medium") {
+        grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
+      }
+    }
+  }
+
+  .load-more-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

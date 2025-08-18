@@ -1,11 +1,10 @@
-<section class="flex flex-col gap-8">
-  <h1 class="m-0 font-medium text-2xl">Last Visited Movies</h1>
+<section>
+  <h1>Last Visited Movies</h1>
 
   <div
-    class="grid gap-3"
-    [class.grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))]]="isMobileSignal()"
-    [class.md:grid-cols-8]="isMenuCollapsedSignal()"
-    [class.md:grid-cols-7]="!isMenuCollapsedSignal()"
+    class="movies-grid"
+    [class.grid-cols-8]="isMenuCollapsedSignal()"
+    [class.grid-cols-7]="!isMenuCollapsedSignal()"
   >
     @for (
       movie of lastVisitedSignal();
@@ -14,31 +13,31 @@
     ) {
       <app-movie
         [movie]="movie.data"
-        [class.md:col-start-3]="movieIndex === 0 && !isMenuCollapsedSignal()"
-        [class.md:col-start-4]="movieIndex === 0 && isMenuCollapsedSignal()"
+        [class.col-start-3]="movieIndex === 0 && !isMenuCollapsedSignal()"
+        [class.col-start-4]="movieIndex === 0 && isMenuCollapsedSignal()"
       ></app-movie>
     }
+
     @for (
       i of placeholdersSignal();
       track placeHolderIndex;
       let placeHolderIndex = $index
     ) {
       <div
-        [class.md:col-start-3]="
+        class="placeholder"
+        [class.no-visited]="!lastVisitedSignal().length"
+        [class.col-start-3]="
           placeHolderIndex === 0 &&
           !lastVisitedSignal().length &&
           !isMenuCollapsedSignal()
         "
-        [class.md:col-start-4]="
+        [class.col-start-4]="
           placeHolderIndex === 0 &&
           !lastVisitedSignal().length &&
           isMenuCollapsedSignal()
         "
-        class="flex items-center justify-center w-full md:w-[15em] h-[15em] md:h-[20em] bg-gray-400/10 rounded text-gray-400/10 font-bold"
       >
-        <span class="text-8xl">
-          {{ placeHolderIndex + lastVisitedSignal().length + 1 }}
-        </span>
+        <span>{{ placeHolderIndex + lastVisitedSignal().length + 1 }}</span>
       </div>
     }
   </div>

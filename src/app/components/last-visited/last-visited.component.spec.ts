@@ -1,7 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MovieComponent } from '@components/movie/movie.component';
-import { LayoutService } from '@services/layout.service';
 import { MovieStore } from '@store/movie.store';
 import { LastVisitedComponent } from './last-visited.component';
 
@@ -12,10 +11,6 @@ describe('LastVisitedComponent', () => {
   const mockStore = {
     lastVisitedSignal: jasmine.createSpy('lastVisitedSignal'),
     config: { isMenuCollapsed: jasmine.createSpy('isMenuCollapsed') },
-  };
-
-  const mockLayoutService = {
-    isMobileSignal: jasmine.createSpy('isMobileSignal'),
   };
 
   // Type helper to access protected members in tests
@@ -32,7 +27,6 @@ describe('LastVisitedComponent', () => {
       imports: [LastVisitedComponent, MovieComponent],
       providers: [
         { provide: MovieStore, useValue: mockStore },
-        { provide: LayoutService, useValue: mockLayoutService },
         provideZonelessChangeDetection(),
       ],
     }).compileComponents();
@@ -63,15 +57,6 @@ describe('LastVisitedComponent', () => {
 
     expect(result).toBeTrue();
     expect(mockStore.config.isMenuCollapsed).toHaveBeenCalled();
-  });
-
-  it('should expose isMobileSignal from the layout service', () => {
-    mockLayoutService.isMobileSignal.and.returnValue(false);
-
-    const result = testComponent.isMobileSignal();
-
-    expect(result).toBeFalse();
-    expect(mockLayoutService.isMobileSignal).toHaveBeenCalled();
   });
 
   it('should compute placeholdersSignal correctly', () => {

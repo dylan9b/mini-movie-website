@@ -1,14 +1,12 @@
 <a
   [routerLink]="['/movies', movie().slug]"
   routerLinkActive="active"
-  class="text-decoration-none h-full rounded justify-center"
-  [class.bg-gray-200]="isImageBroken"
+  [class.no-image-bg]="isImageBroken"
 >
   <img
     [src]="movie().image.url"
     alt="{{ movie().title + ' Image' }}"
-    class="w-full md:w-[15em] h-[15em] md:h-[20em] opacity-0 transition-opacity duration-500 rounded"
-    [class.opacity-100]="isImageLoaded || isImageBroken"
+    [class.loaded]="isImageLoaded || isImageBroken"
     width="300"
     height="445"
     decoding="async"

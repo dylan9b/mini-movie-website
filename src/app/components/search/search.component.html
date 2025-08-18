@@ -1,4 +1,4 @@
-<mat-form-field class="w-full">
+<mat-form-field>
   <mat-label>Begin typing to search for movie</mat-label>
   <input #searchInput matInput type="text" [value]="searchTermSignal()" />
   @if (searchTermSignal()) {
@@ -6,7 +6,6 @@
       matSuffix
       matIconButton
       aria-label="Clear"
-      class="cursor-pointer"
       (click)="onClearFilter()"
     >
       <mat-icon>close</mat-icon>

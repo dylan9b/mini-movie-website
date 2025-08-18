@@ -3,7 +3,6 @@ import { MovieStore } from '@store/movie.store';
 
 @Component({
   selector: 'app-loading',
-  imports: [],
   templateUrl: './loading.component.html',
   styleUrl: './loading.component.scss',
   standalone: true,

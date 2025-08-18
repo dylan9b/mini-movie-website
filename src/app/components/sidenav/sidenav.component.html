@@ -1,5 +1,5 @@
-<section class="!overflow-hidden">
-  <div class="flex items-center justify-between w-full">
+<section>
+  <div>
     <img
       src="assets/images/logo-icon.svg"
       alt="Logo icon"
@@ -8,25 +8,16 @@
       decoding="async"
     />
 
-    <button
-      type="button"
-      mat-icon-button
-      class="md:!hidden"
-      (click)="onCloseClick()"
-    >
+    <button type="button" mat-icon-button (click)="onCloseClick()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <mat-nav-list class="!flex flex-col gap-3">
+  <mat-nav-list>
     @for (item of sideNavItems; track item.label) {
-      <a
-        mat-list-item
-        [routerLink]="item.path"
-        routerLinkActive="active"
-        class="text-center"
-        >{{ item.label }}</a
-      >
+      <a mat-list-item [routerLink]="item.path" routerLinkActive="active">{{
+        item.label
+      }}</a>
     }
   </mat-nav-list>
 </section>
