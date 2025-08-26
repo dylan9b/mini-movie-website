@@ -8,11 +8,11 @@
 
     @for (
       movie of lastVisitedSignal();
-      track movie.data.id;
+      track movie.id;
       let movieIndex = $index
     ) {
       <app-movie
-        [movie]="movie.data"
+        [movie]="movie"
         [class.col-start-3]="movieIndex === 0 && !isMenuCollapsedSignal()"
         [class.col-start-4]="movieIndex === 0 && isMenuCollapsedSignal()"
       ></app-movie>

@@ -4,7 +4,7 @@ export interface MovieState {
   lastVisited: Record<
     MovieResponse['slug'],
     {
-      data: MovieResponse & { accessDate: Date };
+      accessDate: Date;
     }
   >;
 

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatChipsModule } from '@angular/material/chips';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieStore } from '@store/movie.store';
 import { combineLatest, filter, map } from 'rxjs';
 import { MovieResponse } from '../_model/movie-response.model';
@@ -25,6 +25,7 @@ import { MovieResponse } from '../_model/movie-response.model';
 export class MovieDetailComponent implements OnInit {
   private readonly _store = inject(MovieStore);
   private readonly _route = inject(ActivatedRoute);
+  private readonly _router = inject(Router);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _movies$ = toObservable(this._store.movies);
 
@@ -46,16 +47,19 @@ export class MovieDetailComponent implements OnInit {
         map((params) => params.get('slug')),
         filter((slug): slug is string => !!slug),
       ),
-      this._movies$,
+      this._movies$.pipe(filter((movies) => Object.keys(movies).length > 0)),
     ])
       .pipe(
         map(([slug, movies]) => movies?.[slug]),
-        filter((movie): movie is MovieResponse => !!movie),
         takeUntilDestroyed(this._destroyRef),
       )
       .subscribe((movie) => {
-        this.movieDetailSignal.set(movie);
-        this._store.addVisited(movie);
+        if (movie) {
+          this.movieDetailSignal.set(movie);
+          this._store.addVisited(movie);
+        } else {
+          this._router.navigate(['/']);
+        }
       });
   }
 }

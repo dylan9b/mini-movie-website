@@ -73,8 +73,17 @@ export const MovieStore = signalStore(
       ].sort((a, b) => (a > b ? 1 : -1));
     });
 
+    const hasLastVisistedItemsSignal = computed(
+      () => Object.keys(state.lastVisited()).length,
+    );
+    const hasMoviesSignal = computed(() => Object.keys(state.movies()).length);
+
     return {
-      lastVisitedSignal: computed(() => Object.values(state.lastVisited())),
+      lastVisitedSignal: computed(() => {
+        return hasLastVisistedItemsSignal() && hasMoviesSignal()
+          ? Object.keys(state.lastVisited()).map((key) => state?.movies()[key])
+          : [];
+      }),
       genreSignal,
       moviesSignal,
       topMoviesSignal: computed(() =>
@@ -101,18 +110,15 @@ export const MovieStore = signalStore(
 
         // Add or update slug
         lastVisitedInLocalStorage[slug] = {
-          data: {
-            ...movie,
-            accessDate: new Date(),
-          },
+          accessDate: new Date(),
         };
 
         // Convert to entries, sort, and limit to 5
         const sortedEntries = Object.entries(lastVisitedInLocalStorage)
           .sort(
             ([, a], [, b]) =>
-              new Date(b.data.accessDate).getTime() -
-              new Date(a.data.accessDate).getTime(),
+              new Date(b.accessDate).getTime() -
+              new Date(a.accessDate).getTime(),
           )
           .slice(0, store.config.totalLastVisited());
 
